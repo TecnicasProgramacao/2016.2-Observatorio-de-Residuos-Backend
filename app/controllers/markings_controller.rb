@@ -28,29 +28,30 @@ class MarkingsController < ApplicationController
     render json: marking;
   end
 
-
-
-
   # Create marking with success if has complete information and failed if has lack information
   def create
-    titulo_incidente = params[:titulo_incidente]
-    descricao_incidente = params[:descricao_incidente]
-    id_tipo_incidente = params[:id_tipo_incidente]
-    imagem_incidente = 'imagem'
+
+    incident_title = params[:incident_title]
+    incident_description = params[:incident_description]
+    incident_type_id = params[:incident_type_id]
+
+    incident_image = 'image'
     latitude = params[:latitude]
     longitude = params[:longitude]
-    estado = 'GO'
-    cidade = 'Luziania'
-    total_confirmacoes_existencia = params[:total_confirmacoes_existencia]
-    total_confirmacoes_resolvido = params[:total_confirmacoes_resolvido]
 
-    id_usuario = User.find_by_email(params[:author_email]).id_usuario;
+    state = 'GO'
+    city = 'Luziania'
 
-    marking = Marking.new(titulo_incidente: titulo_incidente, id_tipo_incidente: id_tipo_incidente, 
-                          descricao_incidente: descricao_incidente, id_tipo_incidente: id_tipo_incidente, 
-                          imagem_incidente: imagem_incidente, latitude: latitude, longitude: longitude, 
-                          estado: estado, cidade: cidade, id_usuario: id_usuario, total_confirmacoes_existencia: total_confirmacoes_existencia,
-                          total_confirmacoes_resolvido: total_confirmacoes_resolvido)
+    total_confirmations_existent = params[:total_confirmations_existent]
+    total_confirmations_solved = params[:total_confirmations_solved]
+
+    user_id = User.find_by_email(params[:author_email]).user_id;
+
+    marking = Marking.new(incident_title: incident_title, incident_type_id: incident_type_id, 
+                          incident_description: incident_description, incident_type_id: incident_type_id,
+                          incident_image: iincident_image, latitude: latitude, longitude: longitude, 
+                          state: state, city: city, user_id: user_id, total_confirmations_existent: total_confirmations_existent,
+                          total_confirmations_solved: total_confirmations_solved)
     if marking.save
         render json: marking
     else
