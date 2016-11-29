@@ -40,31 +40,36 @@ class PevsController < ApplicationController
 
   # Create pev with success if has complete information and failed if has lack information
   def create
-    titulo_pev = params[:titulo_pev]
-    descricao_pev = params[:descricao_pev]
-    id_tipo_pev = PevType.last.id
+    pev_title = params[:pev_title]
+    pev_description = params[:pev_description]
+
+    pev_id_type = PevType.last.id
+
     latitude = params[:latitude]
     longitude = params[:longitude]
-    estado = 'XX'
-    cidade = 'to do pegarCidade'
+
+    state = 'XX'
+    city = 'to do pegarCidade'
+
     paper = params[:paper]
     metal = params[:metal]
     plastic = params[:plastic]
     glass = params[:glass]
-    total_confirmacoes_funcionando = params[:total_confirmacoes_funcionando]
-    total_confirmacoes_fechou = params[:total_confirmacoes_fechou]
+
+    pev.total_working_confirmations = params[:total_working_confirmations]
+    pev.total_done_confirmations = params[:total_done_confirmations]
     
     user = User.find_by_email(params[:author_email])
 
     if !user.nil?
-      id_usuario = user.id_usuario      
-      pev = Pev.new(titulo_pev: titulo_pev, descricao_pev: descricao_pev,
-                  id_tipo_pev: id_tipo_pev, latitude: latitude,
-                  longitude: longitude, estado: estado, cidade: cidade,
-                  id_usuario: id_usuario,paper: paper, metal: metal,
-                  plastic: plastic, glass: glass,
-                  total_confirmacoes_funcionando: total_confirmacoes_funcionando,
-                  total_confirmacoes_fechou: total_confirmacoes_fechou)
+      user_id = user.user_id      
+      pev = Pev.new(pev_title: pev_title, pev_description: pev_description,
+                    pev_id_type: pev_id_type, latitude: latitude,
+                    longitude: longitude, state: state, city: city,
+                    user_id: user_id,paper: paper, metal: metal,
+                    plastic: plastic, glass: glass,
+                    total_working_confirmations: total_working_confirmations,
+                    total_done_confirmations: total_done_confirmations]
       if pev.save
         render json: pev
       else
