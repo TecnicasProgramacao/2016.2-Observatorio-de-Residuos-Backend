@@ -20,7 +20,7 @@ class MarkingsController < ApplicationController
 
     marking = Marking.find_by_id_incident(params[:id_incident])
     marking.total_existent_confirmations = params[:total_existent_confirmations]
-    marking.total_confirmacoes_resolvido = params[:total_confirmations_solved]
+    marking.total_confirmations_solved = params[:total_confirmations_solved]
 
     user.markings << marking
     marking.save
