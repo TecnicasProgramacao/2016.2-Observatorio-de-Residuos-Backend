@@ -14,16 +14,21 @@ class MarkingsController < ApplicationController
   def new
     marking = Marking.new
   end
-
+ 
   def increment
-    user = User.find_by_id_usuario(params[:id_usuario]);
-    marking = Marking.find_by_id_incidente(params[:id_incidente])
-    marking.total_confirmacoes_existencia = params[:total_confirmacoes_existencia]
-    marking.total_confirmacoes_resolvido = params[:total_confirmacoes_resolvido]
+    user = User.find_by_id_user(params[:id_user]);
+
+    marking = Marking.find_by_id_incident(params[:id_incident])
+    marking.total_existent_confirmations = params[:total_existent_confirmations]
+    marking.total_confirmacoes_resolvido = params[:total_confirmations_solved]
+
     user.markings << marking
     marking.save
+
     render json: marking;
   end
+
+
 
 
   # Create marking with success if has complete information and failed if has lack information
